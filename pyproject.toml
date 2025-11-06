@@ -1,0 +1,17 @@
+[project]
+name = "thermal-data-annotation-QA"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "flask>=3.0.0",
+    "matplotlib>=3.10.6",
+    "numpy>=2.3.3",
+    "opencv-python>=4.11.0.86",
+    "openpyxl>=3.1.5",
+    "pandas>=2.3.2",
+    "psutil>=7.1.0",
+    "scipy>=1.16.2",
+    "tqdm>=4.67.1",
+]
