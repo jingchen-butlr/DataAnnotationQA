@@ -2,20 +2,20 @@
 
 ## Overview
 
-This project includes integration with TDengine database to export thermal sensor raw data. The TDengine export tool is located at `tools/tdengine-export/`.
+This project includes integration with TDengine database to export thermal sensor raw data. The TDengine export tool is located at `dependent_tools/tdengine_export/`.
 
 ## Quick Start
 
 ### 1. Install Dependencies
 
+Using uv (recommended):
 ```bash
-cd tools/tdengine-export/tools/export_tool
-pip3 install -r requirements.txt
+uv pip install -r dependent_tools/tdengine_export/tools/export_tool/requirements.txt
 ```
 
-Or using uv:
+Or navigate to the tool directory:
 ```bash
-cd tools/tdengine-export/tools/export_tool
+cd dependent_tools/tdengine_export/tools/export_tool
 uv pip install -r requirements.txt
 ```
 
@@ -58,7 +58,7 @@ This will:
 You can also use the export tool directly:
 
 ```bash
-cd tools/tdengine-export/tools/export_tool
+cd dependent_tools/tdengine_export/tools/export_tool
 
 # Basic export (multi-frame with epoch timestamps)
 ./quick_export.sh 02:00:1a:62:51:67 "2025-10-13 00:35:00" "2025-10-13 01:20:00" LA
@@ -91,7 +91,7 @@ exports:
 Then run:
 
 ```bash
-cd tools/tdengine-export/tools/export_tool
+cd dependent_tools/tdengine_export/tools/export_tool
 python3 batch_export.py --config your_export_config.yaml
 ```
 
@@ -181,8 +181,8 @@ uv run python create_annotation_video.py \
 
 ```
 DataAnnotationQA/
-├── tools/
-│   └── tdengine-export/          # TDengine export tool (cloned repo)
+├── dependent_tools/
+│   └── tdengine_export/          # TDengine export tool (cloned repo)
 │       ├── tools/
 │       │   └── export_tool/      # Main export utilities
 │       │       ├── quick_export.sh
@@ -231,18 +231,13 @@ No data found in the specified time range.
 
 ```bash
 chmod +x export_from_tdengine.sh
-chmod +x tools/tdengine-export/tools/export_tool/quick_export.sh
+chmod +x dependent_tools/tdengine_export/tools/export_tool/quick_export.sh
 ```
 
 ### Issue: Missing Dependencies
 
 ```bash
-cd tools/tdengine-export/tools/export_tool
-pip3 install -r requirements.txt
-```
-
-Or with uv:
-```bash
+cd dependent_tools/tdengine_export/tools/export_tool
 uv pip install -r requirements.txt
 ```
 
@@ -270,8 +265,8 @@ This ensures high-quality data for annotation and analysis.
 
 ### Documentation
 
-- **TDengine Export Tool README**: `tools/tdengine-export/tools/export_tool/README.md`
-- **TDengine Project README**: `tools/tdengine-export/README.md`
+- **TDengine Export Tool README**: `dependent_tools/tdengine_export/tools/export_tool/README.md`
+- **TDengine Project README**: `dependent_tools/tdengine_export/README.md`
 - **Thermal Data Format**: `THERMAL_DATA_FORMAT.md`
 
 ### Related Guides

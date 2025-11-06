@@ -11,7 +11,7 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 # Configuration
-EXPORT_TOOL_DIR="tools/tdengine-export/tools/export_tool"
+EXPORT_TOOL_DIR="dependent_tools/tdengine_export/tools/export_tool"
 OUTPUT_BASE_DIR="Data/exported_from_tdengine"
 
 # Create output directory if it doesn't exist
@@ -25,7 +25,7 @@ echo ""
 # Check if export tool exists
 if [ ! -d "$EXPORT_TOOL_DIR" ]; then
     echo -e "${YELLOW}⚠️  Export tool not found at: $EXPORT_TOOL_DIR${NC}"
-    echo -e "${YELLOW}Please ensure tools/tdengine-export repository is cloned.${NC}"
+    echo -e "${YELLOW}Please ensure dependent_tools/tdengine_export repository is cloned.${NC}"
     exit 1
 fi
 
@@ -56,8 +56,8 @@ if [ "$1" == "help" ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
     show_usage
     echo ""
     echo -e "${GREEN}For detailed documentation, see:${NC}"
-    echo "  - tools/tdengine-export/tools/export_tool/README.md"
-    echo "  - tools/tdengine-export/README.md"
+    echo "  - dependent_tools/tdengine_export/tools/export_tool/README.md"
+    echo "  - dependent_tools/tdengine_export/README.md"
     exit 0
 fi
 
