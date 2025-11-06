@@ -48,6 +48,9 @@ output/
 *.avi
 *.mov
 
+# External tools (git submodules or cloned repos)
+tools/tdengine-export/
+
 # UV lock file (optional - comment out if you want to commit it)
 # uv.lock
 

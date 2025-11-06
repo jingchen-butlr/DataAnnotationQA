@@ -1,6 +1,8 @@
 This project is to do quality assurance of thermal data annotation.
 
-## Data Format
+## Data Sources
+
+### Sample Data
 
 The thermal data is txt file that saved video frames with epoch time stamp(e.g t: 1760639220.331). An example is Data/Gen3_Annotated_Data_MVP/Raw/SL18_R1.txt
 thermal data format is THERMAL_DATA_FORMAT.md and data_loader codes are at src/thermal_data_processing
@@ -8,6 +10,20 @@ thermal data format is THERMAL_DATA_FORMAT.md and data_loader codes are at src/t
 The annotation file is in json format. An example is Data/Gen3_Annotated_Data_MVP/Annotations/SL18_R1_annotation.json
 The "data_time":1760639220331 is the epoch timestamp 
 The annotation format is at annotation_format.tsx
+
+### Export from TDengine
+
+You can export raw thermal data directly from TDengine database:
+
+```bash
+# Export sensor data with epoch timestamps
+./export_from_tdengine.sh 02:00:1a:62:51:67 '2025-10-13 00:35:00' '2025-10-13 01:20:00' LA
+
+# List available sensors
+./export_from_tdengine.sh list
+```
+
+See **TDENGINE_EXPORT_GUIDE.md** for detailed instructions.
 
 ## Setup
 
