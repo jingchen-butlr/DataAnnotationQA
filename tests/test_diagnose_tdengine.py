@@ -3,7 +3,7 @@
 TDengine Connection Diagnostic Tests
 
 Unit tests for TDengine connection and query operations.
-Run with: python -m unittest tests.diagnose_tdengine
+Run with: python -m unittest tests.test_diagnose_tdengine
 """
 
 import unittest

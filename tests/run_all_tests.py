@@ -37,12 +37,12 @@ def run_all_tests():
     start_dir = Path(__file__).parent
     suite = loader.discover(start_dir, pattern='test_*.py')
     
-    # Also load diagnose_tdengine tests
+    # Also load test_diagnose_tdengine tests
     try:
-        from tests import diagnose_tdengine
-        suite.addTests(loader.loadTestsFromModule(diagnose_tdengine))
+        from tests import test_diagnose_tdengine
+        suite.addTests(loader.loadTestsFromModule(test_diagnose_tdengine))
     except ImportError as e:
-        logger.warning(f"Could not load diagnose_tdengine tests: {e}")
+        logger.warning(f"Could not load test_diagnose_tdengine tests: {e}")
     
     # Run tests
     runner = unittest.TextTestRunner(verbosity=2)

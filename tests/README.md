@@ -4,7 +4,7 @@ This directory contains unit tests for the DataAnnotationQA project using Python
 
 ## Test Modules
 
-### 1. `diagnose_tdengine.py`
+### 1. `test_diagnose_tdengine.py`
 Tests for TDengine database connection and data access.
 
 **Test Classes:**
@@ -42,9 +42,9 @@ python -m unittest discover tests
 ### Run Specific Test Module
 ```bash
 # TDengine diagnostics
-python tests/diagnose_tdengine.py
+python tests/test_diagnose_tdengine.py
 # Or
-python -m unittest tests.diagnose_tdengine
+python -m unittest tests.test_diagnose_tdengine
 
 # Training pipeline tests
 python tests/test_training_pipeline.py
@@ -54,13 +54,13 @@ python -m unittest tests.test_training_pipeline
 
 ### Run Specific Test Class
 ```bash
-python -m unittest tests.diagnose_tdengine.TDengineConnectionTests
+python -m unittest tests.test_diagnose_tdengine.TDengineConnectionTests
 python -m unittest tests.test_training_pipeline.PyTorchDataLoaderTests
 ```
 
 ### Run Specific Test Method
 ```bash
-python -m unittest tests.diagnose_tdengine.TDengineConnectionTests.test_01_server_reachability
+python -m unittest tests.test_diagnose_tdengine.TDengineConnectionTests.test_01_server_reachability
 python -m unittest tests.test_training_pipeline.PyTorchDataLoaderTests.test_01_create_dataloader
 ```
 
