@@ -62,6 +62,9 @@ dependent_tools/tdengine_export/
 *.ipynb
 
 # Test files
-test_*/
-*_test/
+export_yolo_annotations.py
+export_from_tdengine.sh
 
+training_data/
+Data/Gen3_Annotated_Data_MVP/Raw_from_TDengine/
+Data/Gen3_Annotated_Data_MVP/Raw/
