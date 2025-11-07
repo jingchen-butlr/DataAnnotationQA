@@ -767,3 +767,74 @@ rm visualize_raw_thermal.py
 
 See **FINAL_SUMMARY.md** for complete project overview.
 
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## 🆕 NEW: PyTorch DataLoader (Added)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+**Priority: HIGH - Deep Learning Training**
+
+### src/data_pipeline/ (NEW MODULE)
+
+**TDengineConnector Class:**
+- `query_frame_by_timestamp(mac, timestamp_ms, tolerance_ms)` - Fetch single frame into memory
+- `batch_query_frames(mac, timestamps_ms, tolerance_ms)` - Batch fetch for efficiency
+- `_decompress_frame_data(encoded_data, width, height)` - Decompress in-memory
+
+**ThermalAnnotationDataset Class (PyTorch Dataset):**
+- `__init__(annotation_file, mac_address, ...)` - Initialize with JSON + MAC
+- `__len__()` - Return number of samples (required by PyTorch)
+- `__getitem__(idx)` - Fetch frame from TDengine (required by PyTorch)
+- `prefetch_all_frames()` - Load all into memory cache
+- `get_category_name(label_id)` - Get category from ID
+- `get_statistics()` - Dataset statistics
+- `_load_annotations()` - Parse JSON file
+- `_build_category_mapping()` - Create label mapping
+- `_process_annotation(annotation)` - Convert to tensor format
+
+**Helper Functions:**
+- `create_dataloader(...)` - Easy DataLoader creation with prefetch
+- `collate_fn(batch)` - Custom batch collation
+
+### example_training_pipeline.py (NEW SCRIPT)
+
+**Functions:**
+- `example_basic_usage()` - Basic Dataset usage
+- `example_prefetch_all()` - Prefetching demonstration
+- `example_with_dataloader()` - DataLoader iteration
+- `example_training_loop()` - Training loop skeleton
+- `example_custom_transforms()` - Custom transform example
+
+**Purpose**: Complete examples for deep learning training pipeline
+
+### Features
+
+✅ **Read annotation JSON** - Parses data_time and MAC address
+✅ **Fetch from TDengine** - Direct database queries
+✅ **In-memory processing** - NO disk files required
+✅ **PyTorch tensors** - Returns torch.Tensor ready for training
+✅ **YOLO format** - Preserves bbox format [cx, cy, w, h]
+✅ **Caching** - In-memory cache for performance
+✅ **Prefetching** - Batch load all frames
+✅ **Standard API** - Compatible with all PyTorch code
+
+### Keep Decision
+
+**Keep**: ✅ YES - Essential for deep learning training
+
+**Priority**: ⭐⭐⭐ HIGH
+
+**Reason**: 
+- Main requirement for ML training pipeline
+- No disk space needed
+- Direct TDengine integration
+- Standard PyTorch API
+- Well-tested and documented
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Updated Feature Count:
+- Python modules: 10 files (was 8)
+- Core features: 5 modules (was 4)
+- Training-ready: ✅ YES (new capability)
+
