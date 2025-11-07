@@ -137,14 +137,21 @@ class ThermalDatasetBasicTests(unittest.TestCase):
         # Verify statistics structure
         self.assertIn('total_samples', stats, "Stats should have total_samples")
         self.assertIn('num_categories', stats, "Stats should have num_categories")
-        self.assertIn('categories', stats, "Stats should have categories list")
-        self.assertIn('annotations_per_sample', stats, "Stats should have annotations_per_sample")
+        self.assertIn('categories', stats, "Stats should have categories dict")
+        self.assertIn('mac_address', stats, "Stats should have mac_address")
+        self.assertIn('cache_size', stats, "Stats should have cache_size")
+        self.assertIn('cached_frames', stats, "Stats should have cached_frames")
         
+        # Verify values
         self.assertEqual(stats['total_samples'], len(dataset), "Sample count should match")
+        self.assertEqual(stats['mac_address'], self.mac_address, "MAC address should match")
+        self.assertIsInstance(stats['categories'], dict, "Categories should be a dict")
+        self.assertGreaterEqual(stats['cache_size'], 0, "Cache size should be non-negative")
         
         logger.info(f"✅ Statistics generated")
         logger.info(f"   Total samples: {stats['total_samples']}")
         logger.info(f"   Num categories: {stats['num_categories']}")
+        logger.info(f"   Cache size: {stats['cache_size']}")
 
 
 class ThermalDatasetCacheTests(unittest.TestCase):
