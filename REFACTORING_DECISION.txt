@@ -1,0 +1,132 @@
+╔════════════════════════════════════════════════════════════╗
+║   FOR DL TRAINING PIPELINE - REFACTORING DECISION          ║
+╚════════════════════════════════════════════════════════════╝
+
+Based on your requirement: "Read annotation JSON, use data_time and MAC 
+to fetch from TDengine, prepare for DL training"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ KEEP THESE - ESSENTIAL FOR DL TRAINING (7 files)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. prepare_training_data.py (NEW!)
+   → Main pipeline: annotation JSON → TDengine → YOLO dataset
+   → ONE COMMAND to prepare training data
+   
+2. export_yolo_annotations.py
+   → Export YOLO format (labels, images, config)
+   
+3. src/visualize_annotations/loader.py
+   → Read annotation JSON
+   → Extract data_time timestamps
+   → Match annotations to frames
+   
+4. src/thermal_data_processing/data_loader.py
+   → Load thermal data from TXT files
+   → Convert deciKelvin to Celsius
+   
+5. diagnose_tdengine.py
+   → Test TDengine connection
+   → Troubleshoot issues
+   
+6. export_from_tdengine.sh
+   → Helper script for manual TDengine export
+   
+7. dependent_tools/tdengine_export/tools/export_tool/
+   → Fetch data from TDengine database
+   → Used by prepare_training_data.py
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚠️ KEEP THESE IF YOU WANT QA VIDEOS (3 files) - OPTIONAL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+8. create_annotation_video.py
+   → Create videos to review annotations before training
+   → QA verification tool
+   
+9. src/visualize_annotations/visualizer.py
+   → Render bounding boxes and labels
+   → Used for video creation
+   
+10. src/visualize_annotations/video_exporter.py
+    → Export MP4 videos
+    → Used for video creation
+
+USE CASE: Review annotation quality before starting expensive training
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+❌ REMOVE THESE - NOT NEEDED FOR DL TRAINING (4 files)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+× visualize_annotations.py (292 lines)
+  → Interactive matplotlib viewer
+  → Redundant with prepare_training_data + create_annotation_video
+  → NOT used in training pipeline
+  
+× visualize_raw_thermal.py (150 lines)
+  → Visualize without annotations
+  → Not useful for training (need annotations!)
+  → NOT used in training pipeline
+  
+× src/thermal_data_processing/streaming_data_loader.py (257 lines)
+  → Load SQS streaming format
+  → Different data format from TDengine
+  → NOT used in training pipeline
+  
+× src/thermal_data_processing/frame_processor.py (211 lines)
+  → Advanced temperature processing
+  → Not needed for training prep
+  → NOT used in training pipeline
+
+IMPACT: Remove 910 lines (38%) with NO impact on training pipeline
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Current code: 2,400 lines Python
+Essential for DL: 1,300 lines (with QA: 1,900 lines)
+Removable: 910 lines (38%)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎯 RECOMMENDED CONFIGURATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+MINIMAL (Training only):
+  Keep: 7 essential files
+  Remove: 7 files (QA + unused)
+  Result: 1,300 lines, pure training pipeline
+
+RECOMMENDED (Training + QA):
+  Keep: 10 files (essential + QA)
+  Remove: 4 files (unused only)
+  Result: 1,900 lines, training + verification
+
+CURRENT (Everything):
+  Keep: All 14+ files
+  Remove: Nothing
+  Result: 2,400 lines, all features
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 QUICK START (Training Pipeline)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+# Prepare training data (automated)
+uv run python prepare_training_data.py \
+    --annotation Data/annotations/your_file.json \
+    --mac 02:00:1a:62:51:67 \
+    --output training_data/session_001
+
+# Train model (YOLOv8)
+yolo train data=training_data/session_001/yolo/dataset.yaml \
+    model=yolov8n.pt epochs=100
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DECISION: 
+- For pure DL training: Keep 7 essential files
+- For DL + QA review: Keep 10 files (recommended)
+- Can safely remove: 4 files (910 lines, 38%)
+
+See DL_FEATURES_ESSENTIAL.md and REFACTORING_GUIDE.md for details.
+
